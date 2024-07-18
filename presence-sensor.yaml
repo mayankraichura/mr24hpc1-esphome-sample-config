@@ -1,0 +1,137 @@
+substitutions:
+  name: presense-sensor
+  friendly_name: Presence Sensor
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  name_add_mac_suffix: false
+  project:
+    name: esphome.web
+    version: '1.0'
+
+esp8266:
+  board: nodemcuv2
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+- platform: esphome
+
+# Allow provisioning Wi-Fi via serial
+improv_serial:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device via WiFi AP.
+captive_portal:
+
+dashboard_import:
+  package_import_url: github://esphome/example-configs/esphome-web/esp8266.yaml@main
+  import_full_config: true
+
+# To have a "next url" for improv serial
+web_server:
+
+uart:
+  id: uart_bus
+  baud_rate: 115200
+  rx_pin: 4
+  tx_pin: 5
+  parity: NONE
+  stop_bits: 1
+
+seeed_mr24hpc1:
+  id: my_seeed_mr24hpc1
+
+text_sensor:
+  - platform: seeed_mr24hpc1
+    heart_beat:
+      name: "Heartbeat"
+    product_model:
+      name: "Product Model"
+    product_id:
+      name: "Product ID"
+    hardware_model:
+      name: "Hardware Model"
+    hardware_version:
+      name: "Hardware Version"
+    keep_away:
+      name: "Active Reporting Of Proximity"
+    motion_status:
+      name: "Motion Information"
+    custom_mode_end:
+      name: "Custom Mode Status"
+
+binary_sensor:
+  - platform: seeed_mr24hpc1
+    has_target:
+      name: "Presence Information"
+
+sensor:
+  - platform: seeed_mr24hpc1
+    custom_presence_of_detection:
+      name: "Static Distance"
+    movement_signs:
+      name: "Body Movement Parameter"
+    custom_motion_distance:
+      name: "Motion Distance"
+    custom_spatial_static_value:
+      name: "Existence Energy"
+    custom_spatial_motion_value:
+      name: "Motion Energy"
+    custom_motion_speed:
+      name: "Motion Speed"
+    custom_mode_num:
+      name: "Current Custom Mode"
+
+
+switch:
+  - platform: seeed_mr24hpc1
+    underlying_open_function:
+      name: Underlying Open Function Info Output Switch
+
+number:
+  - platform: seeed_mr24hpc1
+    sensitivity:
+      name: "Sensitivity"
+    custom_mode:
+      name: "Custom Mode"
+    existence_threshold:
+      name: "Existence Energy Threshold"
+    motion_threshold:
+      name: "Motion Energy Threshold"
+    motion_trigger:
+      name: "Motion Trigger Time"
+    motion_to_rest:
+      name: "Motion To Rest Time"
+    custom_unman_time:
+      name: "Time For Entering No Person State (Custom Mode)"
+
+    
+button:
+  - platform: seeed_mr24hpc1
+    restart:
+      name: "Module Restart"
+    custom_set_end:
+      name: "End Of Custom Mode Settings"
+
+select:
+  - platform: seeed_mr24hpc1
+    scene_mode:
+      name: "Scene"
+    unman_time:
+      name: "Time For Entering No Person State (Standard Function)"
+    existence_boundary:
+      name: "Existence Boundary"
+    motion_boundary:
+      name: "Motion Boundary"
