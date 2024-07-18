@@ -11,7 +11,8 @@ The device is connected to Wemos D1 Mini over software serial with D2 (GPIO4) as
 ## Configuration
 The default configurations are useless. Please use Custom mode. You'll have to do trial and error.
 
-[image]
+![image](https://github.com/user-attachments/assets/330963a9-a36e-41f9-a6ae-131d1524f1f7)
+
 
 
 *Please note that device is extremely sensitive and will be affected by a fan or AC. Point it away from both. Reduction in sensitivity may not work.*
